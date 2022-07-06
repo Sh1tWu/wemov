@@ -1,0 +1,87 @@
+.display {
+    width: 100%;
+    .displayImg {
+        width: 100%;
+        height: calc(100vh - 50px);
+        object-fit: cover;
+    }
+    .descriptionWrap {
+        color: white;
+        position: absolute;
+        width: 90%;
+        left: 50%;
+        top: 80%;
+        transform: translate(-50%, -50%);
+        .description {
+            display: flex;
+            position: relative;
+            .leftPart {
+                flex: 1;
+                .info {
+                    font-size: 14px;
+                    font-weight: 600;
+                    .name {
+                        font-size: 30px;
+                        font-weight: 600;
+                    }
+                    .date {
+                        font-size: 14px;
+                    }
+                    .genres {
+                        display: flex;
+                        .genresItem {
+                            margin-right: 5px;
+                        }
+                    }
+                    .message {
+                        display: flex;
+                        .runtime {
+                            display: flex;
+                            align-items: center;
+                            margin-right: 20px;
+                            .runtimeImg {
+                                margin-right: 3px;
+                            }
+                            .runtimeText {
+                                font-size: 16px;
+                            }
+                        }
+                        .spokenLanguage {
+                            display: flex;
+                            .spokenLanguageImg {
+                                margin-right: 5px;
+                            }
+                            .languageItem {
+                                font-size: 16px;
+                                margin-right: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+            .rightPart {
+                flex: 1;
+                font-size: 16px;
+                font-weight: 550;
+                .overview {
+                    font-size: 14px;
+                    font-weight: lighter;
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+    .play {
+        position: absolute;
+        display: flex;
+        justify-self: center;
+        align-items: center;
+        width: 100%;
+        height: calc(100vh - 50px);
+        .playIcon {
+            width: 65px;
+            margin: 0 auto;
+            height: 65px;
+        }
+    }
+}

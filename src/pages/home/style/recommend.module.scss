@@ -1,0 +1,107 @@
+@media screen and (min-width: 1920px) {
+    .descriptionSub {
+        top: -420px;
+        width: 80%;
+        padding: 35px 30px;
+    }
+    .defaultImg {
+        height: 600px;
+    }
+    .play {
+        height: 600px;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1919px) {
+    .descriptionSub {
+        top: -410px;
+        width: 90%;
+        padding: 35px 30px;
+    }
+    .defaultImg {
+        height: calc(100vh - 50px);
+    }
+    .play {
+        height: calc(100vh - 50px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .descriptionSub {
+        top: -400px;
+        width: 100%;
+        padding: 35px 20px;
+        .title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .name {
+            font-size: 40px;
+            font-weight: 600;
+        }
+        .date {
+            font-size: 12px;
+        }
+        .information {
+            max-width: 335px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+    }
+}
+
+.recommend {
+    width: 100%;
+    cursor: pointer;
+
+    .defaultImg {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .description {
+        position: relative;
+        margin: 0 auto;
+        color: white;
+
+        .descriptionSub {
+            position: absolute;
+
+            .title {
+                font-size: 20px;
+                font-weight: bolder;
+            }
+            .name {
+                font-size: 50px;
+                font-weight: bolder;
+            }
+            .date {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            .information {
+                max-width: 335px;
+                font-size: 18px;
+                font-weight: 600;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 8;
+                -webkit-box-orient: vertical;
+            }
+        }
+    }
+
+    .play {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 50px;
+        width: 100%;
+        .playIcon {
+            width: 65px;
+            height: 65px;
+        }
+    }
+}
