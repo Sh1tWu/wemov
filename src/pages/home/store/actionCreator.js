@@ -19,7 +19,6 @@ export const addImagesPathAction = (path) => ({
 export const getRecommendListAction = () => {
     return (dispatch) => {
         getRecommendList().then((res) => {
-            // console.log(res)
             console.log(res)
             dispatch(addRecommendListAction(res.results))
         })

@@ -4,9 +4,10 @@ import { BrowserRouter } from "react-router-dom"
 import { Provider } from "react-redux"
 
 import App from "./App"
-import store from "./store/index"
+import store from "store/index"
 
-import "@/assets/css/index.css"
+import "assets/css/index.global.css"
+import "assets/css/reset.global.css"
 
 ReactDOM.render(
     <Provider store={store}>
