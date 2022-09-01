@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react"
 
 // 网络请求
-import { getReviews } from "@/network/reviews"
+import { getReviews } from "network/reviews"
 
 // 工具函数
-import resolveAvatarPath from "@/utils/resolveAvatarPath"
-import resolveDate from "@/utils/resolveDate"
+import resolveAvatarPath from "utils/resolveAvatarPath"
+import resolveDate from "utils/resolveDate"
 
 // Hooks
-import useWidth from "@/hooks/useWidth"
+import useWidth from "hooks/useWidth"
 
 // style
 import {
@@ -57,7 +57,7 @@ const Reviews = (props) => {
             setMainReviewList(results)
             setSecondaryReviewList(results.slice(0, 6))
         })
-    }, [])
+    }, [id])
 
     const reviewsQueue =
         windowWidth >= 1530 || windowWidth <= 1149

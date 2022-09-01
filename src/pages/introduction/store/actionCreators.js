@@ -24,6 +24,7 @@ export const addReviewsAction = (reviews) => ({
 export const getMovieAction = (id) => {
     return (dispatch) => {
         getMovie(id).then((res) => {
+            console.log(res)
             dispatch(addMovieAction(res))
         })
     }

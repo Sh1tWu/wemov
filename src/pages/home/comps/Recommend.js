@@ -5,7 +5,7 @@ import { useSelector, useDispatch, shallowEqual } from "react-redux"
 // 样式
 import styles from "../style/recommend.module.scss"
 
-import IMGBASEURL from "@/network/IMAGEURL"
+import IMGBASEURL from "network/IMAGEURL"
 
 export default function Recommend() {
     const { firstMovie } = useSelector(
@@ -17,6 +17,7 @@ export default function Recommend() {
 
     const [movie, setMovie] = useState([])
     useEffect(() => {
+        console.log(firstMovie)
         setMovie(firstMovie[0])
     }, [firstMovie])
     // 路由跳转
@@ -34,7 +35,7 @@ export default function Recommend() {
             {movie ? (
                 <>
                     <img
-                        src={`${IMGBASEURL}${movie.backdrop_path}`}
+                        src={`${IMGBASEURL}/${movie.backdrop_path}`}
                         className={styles.defaultImg}
                         alt=""
                     />

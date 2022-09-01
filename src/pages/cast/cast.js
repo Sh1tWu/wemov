@@ -4,10 +4,10 @@ import { useLocation } from "react-router-dom"
 import Banner from "./comps/Banner"
 import List from "./comps/List"
 
-import getPerson from "@/network/person"
+import getPerson from "network/person"
 
-import removeDuplications from "@/utils/removeDuplications"
-import classifyMovie from "@/utils/classifyMovie"
+// import removeDuplications from "utils/removeDuplications"
+import classifyMovie from "utils/classifyMovie"
 
 function Cast() {
     const [jobs, setJobs] = useState([])
@@ -15,27 +15,29 @@ function Cast() {
     const [categoryMovie, setCategoryMovie] = useState(new Map())
     const location = useLocation()
     const routerState = location.state
-    console.log(routerState)
 
     useEffect(() => {
+        let mounted = false
         getPerson(routerState.id).then((res) => {
+            console.log(res)
             let appointments = res.crew.map((item) => {
                 return item.job
             })
+            let set = new Set(appointments)
             // 主演电影
             setActingMovie(res.cast)
             // 职位去重
-            let results = removeDuplications(appointments)
+            let results = Array.from(set)
             // 职位
             setJobs(results)
             // 担任职位的电影归类
             let categoryResults = classifyMovie(results, res.crew)
             setCategoryMovie(categoryResults)
         })
-    }, [])
-
-    console.log(jobs)
-    console.log(categoryMovie)
+        return function cleanup() {
+            mounted = false
+        }
+    }, [routerState.id])
 
     return (
         <>

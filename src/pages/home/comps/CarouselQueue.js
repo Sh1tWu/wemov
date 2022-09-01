@@ -9,7 +9,7 @@ import styles from "../style/carouselQueue.module.scss"
 import { getRecommendListAction } from "../store/actionCreator"
 
 // 常量
-import IMGBASEURL from "@/network/IMAGEURL"
+import IMGBASEURL from "network/IMAGEURL"
 
 export default function CarouselQueue() {
     const history = useHistory()

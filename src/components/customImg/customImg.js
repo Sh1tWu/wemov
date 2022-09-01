@@ -1,66 +1,61 @@
-import React, { useState, memo } from "react"
+import React, { useRef, memo } from "react"
 import PropTypes from "prop-types"
+import { Image } from "antd"
 
-import ErrorImg from "@/assets/img/icon/errorImg.svg"
-import LoadImg from "@/assets/img/icon/loadingImg.svg"
-import ErrorAvatarImg from "@/assets/img/icon/avatar.svg"
+import IMAGEURL from "network/IMAGEURL"
+
+import ErrorImg from "assets/img/icon/errorImg.svg"
+import ErrorAvatarImg from "assets/img/icon/avatar.svg"
 
 const CustomImg = memo((props) => {
-    const { type } = props
-    const [errorState, setErrorState] = useState(false)
-    const [src, setSrc] = useState(LoadImg)
-    const [isFlag, setIsFlag] = useState(false)
+    const imgRef = useRef()
 
+    const handleImgUrl = () => {
+        return `${IMAGEURL}${props.src}`
+    }
+
+    // 加载成功时的函数
     const handleOnLoad = () => {
-        if (isFlag) return
+        console.log("图片加载成功")
+        console.log(`${IMAGEURL}${props.src}`)
+        // imgRef.current.src =
+    }
 
-        const imgDom = new Image()
-        imgDom.src = props.src
-
-        imgDom.onload = function () {
-            setIsFlag(true)
-            setSrc(props.src)
-        }
-
-        imgDom.onerror = function () {
-            setIsFlag(true)
-            setErrorState(true)
-            if (type === "people") {
-                setSrc(ErrorAvatarImg)
-            } else {
-                setSrc(ErrorImg)
-            }
+    // 加载失败的函数
+    const handleOnError = () => {
+        console.log("图片加载失败")
+        if (props.type === "people") {
+            imgRef.current.src = ErrorAvatarImg
+        } else {
+            imgRef.current.src = ErrorImg
         }
     }
 
-    const baseErrorStyle = {
-        backgroundColor: "rgba(0, 0, 0, 0.1)",
-    }
+    // 基本样式
     const baseNormalStyle = {
         width: "100%",
     }
 
     return (
         <>
-            {errorState === true ? (
-                <div style={{ ...baseErrorStyle, ...props.errorStyle }}></div>
-            ) : (
-                <img
-                    src={src}
-                    onLoad={handleOnLoad}
-                    style={{ ...baseNormalStyle, ...props.normalStyle }}
-                ></img>
-            )}
+            <Image
+                src={handleImgUrl()}
+                preview={false}
+                fallback={props.type === "people" ? ErrorAvatarImg : ErrorImg}
+                style={{ ...baseNormalStyle, ...props.style }}
+            ></Image>
         </>
     )
 })
 
 CustomImg.defaultProps = {
-    type: "img",
+    type: "",
+    src: "",
     style: {},
 }
 
 CustomImg.propType = {
+    src: PropTypes.string,
     type: PropTypes.string,
     style: PropTypes.object,
 }

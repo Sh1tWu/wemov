@@ -35,6 +35,7 @@ export const Item = styled.div`
     width: 370px;
     height: 208px;
     margin-bottom: 10px;
+    cursor: pointer;
 `
 
 export const ItemImg = styled.img.attrs((props) => ({

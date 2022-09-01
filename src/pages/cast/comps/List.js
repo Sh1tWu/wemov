@@ -1,4 +1,6 @@
-import React, { memo, useState } from "react"
+import React, { memo } from "react"
+
+import { useHistory } from "react-router-dom"
 
 import {
     Container,
@@ -8,7 +10,7 @@ import {
     Wrap,
     Item,
     ItemImgWrap,
-    ItemImg,
+    // ItemImg,
     DescriptionWrap,
     Description,
     Info,
@@ -17,14 +19,18 @@ import {
     Date,
 } from "../style/List.style"
 
-import IMGBASEURL from "@/network/IMAGEURL"
-
-import CustomImg from "@/components/customImg/customImg"
+import CustomImg from "components/customImg/customImg"
 
 const List = memo((props) => {
-    const { list } = props
-    // console.log(list)
+    const history = useHistory()
 
+    const { list } = props
+
+    const toMovie = (movie_id) => {
+        history.push(`/introduction/${movie_id}`)
+    }
+
+    console.log(list)
     return (
         <>
             <Container>
@@ -36,16 +42,24 @@ const List = memo((props) => {
                     {list
                         ? list.map((item) => {
                               return (
-                                  <Item>
+                                  <Item
+                                      key={item.id}
+                                      onClick={() => {
+                                          toMovie(item.id)
+                                      }}
+                                  >
+                                      {/* 影片图片 */}
                                       <ItemImgWrap>
                                           <CustomImg
-                                              src={`${IMGBASEURL}${item.backdrop_path}`}
-                                              errorStyle={{
-                                                  width: "365px",
+                                              src={`${item.backdrop_path}`}
+                                              style={{
+                                                  width: "100%",
                                                   height: "208px",
+                                                  margin: "0 auto",
                                               }}
                                           />
                                       </ItemImgWrap>
+                                      {/* 影片信息 */}
                                       <Description>
                                           <Title>{item.title}</Title>
                                           <Info>

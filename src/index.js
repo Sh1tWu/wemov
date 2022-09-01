@@ -10,12 +10,12 @@ import "assets/css/index.global.css"
 import "assets/css/reset.global.css"
 
 ReactDOM.render(
-    <Provider store={store}>
-        <React.StrictMode>
+    <React.StrictMode>
+        <Provider store={store}>
             <BrowserRouter>
                 <App />
             </BrowserRouter>
-        </React.StrictMode>
-    </Provider>,
+        </Provider>
+    </React.StrictMode>,
     document.getElementById("root")
 )

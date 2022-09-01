@@ -32,6 +32,7 @@ export const Apartment = styled.div`
 
 export const Size = styled.div`
     font-size: 14px;
+    cursor: pointer;
 `
 
 export const Wrap = styled.div`
@@ -45,15 +46,11 @@ export const Item = styled.div`
     height: 208px;
     margin-bottom: 20px;
     margin-right: 10px;
+    /* background-color: white; */
+    cursor: pointer;
 `
 
 export const ItemImgWrap = styled.div`
-    width: 100%;
-`
-
-export const ItemImg = styled.img.attrs((props) => ({
-    src: props.src,
-}))`
     width: 100%;
 `
 

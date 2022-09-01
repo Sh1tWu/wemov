@@ -4,13 +4,13 @@ import React, { useState, useEffect } from "react"
 import style from "../style/display.module.scss"
 
 // Icon
-import Horn from "@/assets/img/icon/horn.svg"
-import Clock from "@/assets/img/icon/clock.svg"
+import Horn from "assets/img/icon/horn.svg"
+import Clock from "assets/img/icon/clock.svg"
 
 // constants
-import IMGBASEURL from "@/network/IMAGEURL"
+import IMGBASEURL from "network/IMAGEURL"
 
-import { getMovie } from "@/network/movie"
+import { getMovie } from "network/movie"
 
 export default function Display(props) {
     const { id } = props
@@ -20,7 +20,7 @@ export default function Display(props) {
         getMovie(id).then((res) => {
             setMovie(res)
         })
-    }, [])
+    }, [id])
 
     return (
         <div className={style.display}>
@@ -95,7 +95,7 @@ export default function Display(props) {
                         </div>
                     </div>
                     {/* 介绍 */}
-                    <div class={style.rightPart}>
+                    <div className={style.rightPart}>
                         摘要
                         <div className={style.overview}>{movie.overview}</div>
                     </div>

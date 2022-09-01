@@ -8,7 +8,7 @@ export default function axios(config) {
 
         instance.interceptors.request.use(
             (config) => {
-                console.log("请求被拦截")
+                // console.log("请求被拦截")
                 // config.data = JSON.stringify(config.data)
                 // config.headers = {
                 //     "Content-Type": "application/x-www-form-urlencoded",
@@ -29,7 +29,7 @@ export default function axios(config) {
 
         instance.interceptors.response.use(
             (res) => {
-                console.log("响应被拦截")
+                // console.log("响应被拦截")
                 // console.log(res)
                 return res.data
             },

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react"
+import { useHistory } from "react-router-dom"
 
-import getRelatedFilms from "@/network/relatedFilms"
-import { getMovie } from "@/network/movie"
+import getRelatedFilms from "network/relatedFilms"
+import { getMovie } from "network/movie"
 
-import CustomImg from "@/components/customImg/customImg"
+import CustomImg from "components/customImg/customImg"
 
 import {
     Container,
@@ -18,24 +19,28 @@ import {
     Date,
 } from "../style/related.style"
 
-import IMGBASEURL from "@/network/IMAGEURL"
-
 function Related(props) {
+    const history = useHistory()
+
     const { id } = props
     const [filmsList, setFilmsList] = useState([])
     const [country, setCountry] = useState("")
 
     useEffect(() => {
+        // 获取相关影片
         getRelatedFilms(id).then((res) => {
-            // console.log(res.results)
+            console.log(res.results)
             setFilmsList(res.results.splice(0, 12))
         })
+        // 获取国家名字
         getMovie(id).then((res) => {
-            // console.log(res)
             setCountry(res.production_countries[0].name)
         })
-    }, [])
-    // console.log(filmsList)
+    }, [id])
+
+    const toMovie = (movie_id) => {
+        history.push(`/introduction/${movie_id}`)
+    }
 
     return (
         <Container>
@@ -44,9 +49,14 @@ function Related(props) {
                 {filmsList
                     ? filmsList.map((item) => {
                           return (
-                              <Item key={item.id}>
+                              <Item
+                                  key={item.id}
+                                  onClick={() => {
+                                      toMovie(item.id)
+                                  }}
+                              >
                                   <CustomImg
-                                      src={`${IMGBASEURL}/${item.backdrop_path}`}
+                                      src={item.backdrop_path}
                                       type="img"
                                       style={{ width: "100%", height: "208px" }}
                                   />

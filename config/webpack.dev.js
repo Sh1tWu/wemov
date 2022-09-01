@@ -4,7 +4,7 @@ const resolveApp = require("./paths")
 
 module.exports = {
     mode: "development",
-    devtool: "source-map",
+    devtool: "cheap-source-map",
     plugins: [new ReactRefreshWebpackPlugin()],
     devServer: {
         port: 8080,

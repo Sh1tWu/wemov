@@ -4,16 +4,16 @@ import { useHistory } from "react-router-dom"
 
 import style from "../style/casts.module.scss"
 
-import { getCasts } from "@/network/casts"
+import { getCasts } from "network/casts"
 
-import IMGBASEURL from "@/network/IMAGEURL"
+import IMGBASEURL from "network/IMAGEURL"
 
-import useWidth from "@/hooks/useWidth"
+import useWidth from "hooks/useWidth"
 
-import CustomImg from "@/components/customImg/customImg"
+import CustomImg from "components/customImg/customImg"
 
 // 工具函数
-import resolveCastName from "@/utils/resolveCastName"
+import resolveCastName from "utils/resolveCastName"
 
 export default function Casts(props) {
     const { id } = props
@@ -27,21 +27,33 @@ export default function Casts(props) {
         getCasts(id).then((res) => {
             setCasts(res.cast)
         })
-    }, [])
+    }, [id])
 
     useEffect(() => {
         setMainCasts(casts.slice(0, 8))
         setSecondaryCasts(casts.slice(0, 6))
     }, [casts])
 
+    // 跳转至演员
     function toCredits(id) {
-        history.push(`/introduction/${id}/credits`)
+        history.push({
+            pathname: `/introduction/${id}/credits`,
+        })
     }
 
+    // 跳转至指定职员页面
     function toCast(name, id) {
         console.log(name, id)
         let urlName = resolveCastName(name)
         history.push({ pathname: `/cast/${urlName}`, state: { id: id } })
+    }
+
+    function isUsefulUrl(profilePath) {
+        if (profilePath) {
+            return `${IMGBASEURL}${profilePath}`
+        } else {
+            return null
+        }
     }
 
     return (
@@ -67,7 +79,7 @@ export default function Casts(props) {
                                   >
                                       <div className={style.itemImgWrap}>
                                           <CustomImg
-                                              src={`${IMGBASEURL}${item.profile_path}`}
+                                              src={item.profile_path}
                                               type="people"
                                               style={{
                                                   width: "100%",
@@ -93,7 +105,7 @@ export default function Casts(props) {
                               <div className={style.item} key={item.id}>
                                   <div className={style.itemImgWrap}>
                                       <img
-                                          src={`${IMGBASEURL}${item.profile_path}`}
+                                          src={item.profile_path}
                                           className={style.itemImg}
                                           alt="演员图片"
                                       />

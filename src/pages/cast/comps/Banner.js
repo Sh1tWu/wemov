@@ -12,11 +12,11 @@ import {
     Introduction,
 } from "../style/Banner.style"
 
-import CustomImg from "@/components/customImg/customImg"
+import CustomImg from "components/customImg/customImg"
 
-import getPeople from "@/network/people"
+import getPeople from "network/people"
 
-import IMGBASEURL from "@/network/IMAGEURL"
+import IMAGEURL from "network/IMAGEURL"
 
 const Banner = memo((props) => {
     const { id } = props
@@ -26,7 +26,6 @@ const Banner = memo((props) => {
     useEffect(() => {
         getPeople(id)
             .then((res) => {
-                // console.log(res)
                 setInfo(res)
             })
             .catch((err) => {
@@ -39,7 +38,10 @@ const Banner = memo((props) => {
             <Container>
                 <Wrap>
                     <ProfileImgWrap>
-                        <ProfileImg src={`${IMGBASEURL}${info.profile_path}`} />
+                        <CustomImg
+                            src={`${IMAGEURL}${info.profile_path}`}
+                            type="people"
+                        />
                     </ProfileImgWrap>
                     <InfoWrap>
                         <Name>{info.name}</Name>
