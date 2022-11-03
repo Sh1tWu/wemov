@@ -1,6 +1,6 @@
 import React, { memo } from "react"
 
-import { useHistory } from "react-router-dom"
+import { useHistory, useLocation, useParams } from "react-router-dom"
 
 import {
     Container,
@@ -10,8 +10,6 @@ import {
     Wrap,
     Item,
     ItemImgWrap,
-    // ItemImg,
-    DescriptionWrap,
     Description,
     Info,
     Title,
@@ -23,6 +21,9 @@ import CustomImg from "components/customImg/customImg"
 
 const List = memo((props) => {
     const history = useHistory()
+    const params = useParams()
+    const location = useLocation()
+    const { id } = location.state
 
     const { list } = props
 
@@ -30,13 +31,23 @@ const List = memo((props) => {
         history.push(`/introduction/${movie_id}`)
     }
 
-    console.log(list)
+    const toCollection = () => {
+        history.push({
+            pathname: `/cast/${params.name}/films/${props?.title}`,
+            state: { id },
+        })
+    }
+
     return (
         <>
             <Container>
                 <Header>
                     <Apartment>{props.title}</Apartment>
-                    <Size>Show all({props.length})</Size>
+                    {props.length > 12 ? (
+                        <Size onClick={toCollection}>
+                            Show all({props.length})
+                        </Size>
+                    ) : null}
                 </Header>
                 <Wrap>
                     {list
@@ -55,7 +66,7 @@ const List = memo((props) => {
                                               style={{
                                                   width: "100%",
                                                   height: "208px",
-                                                  margin: "0 auto",
+                                                  //   margin: "0 auto",
                                               }}
                                           />
                                       </ItemImgWrap>

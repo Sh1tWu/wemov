@@ -1,29 +1,49 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
-import { useSelector, useDispatch, shallowEqual } from "react-redux"
+import { useSelector, shallowEqual } from "react-redux"
 
 // 样式
 import styles from "../style/recommend.module.scss"
 
+// img
 import IMGBASEURL from "network/IMAGEURL"
 
-export default function Recommend() {
+function Recommend() {
     const { firstMovie } = useSelector(
         (state) => ({
-            firstMovie: state.getIn(["home", "firstMovie"]),
+            firstMovie: state.home.firstMovie,
         }),
         shallowEqual
     )
 
+    const history = useHistory()
     const [movie, setMovie] = useState([])
+    const [imgError, setImgError] = useState(false)
+
     useEffect(() => {
-        console.log(firstMovie)
         setMovie(firstMovie[0])
     }, [firstMovie])
+
     // 路由跳转
-    const history = useHistory()
     function toIntroduction(id) {
         history.push(`/introduction/${id}`)
+    }
+
+    // img onerror
+    function resetImgUrl(e, imgSrc, maxErrorNum) {
+        const timer = setTimeout(() => {
+            if (maxErrorNum > 0) {
+                console.log(maxErrorNum)
+                maxErrorNum -= 1
+                e.target.src = imgSrc
+                resetImgUrl(e, imgSrc, maxErrorNum)
+            } else {
+                console.log("请求图片失败")
+                clearTimeout(timer)
+                setImgError(true)
+                e.target.onerror = null
+            }
+        }, 2000)
     }
 
     return (
@@ -34,11 +54,23 @@ export default function Recommend() {
             {/* 默认展示图片 */}
             {movie ? (
                 <>
-                    <img
-                        src={`${IMGBASEURL}/${movie.backdrop_path}`}
-                        className={styles.defaultImg}
-                        alt=""
-                    />
+                    {imgError === false ? (
+                        <img
+                            src={`${IMGBASEURL}${movie.backdrop_path}`}
+                            className={styles.defaultImg}
+                            alt="电影海报"
+                            onError={(e) => {
+                                resetImgUrl(
+                                    e,
+                                    `${IMGBASEURL}${movie.backdrop_path}`,
+                                    3
+                                )
+                            }}
+                        />
+                    ) : (
+                        <div className={styles.imgErrorCover}></div>
+                    )}
+
                     {/* 影片文字描述 */}
                     <div className={styles.description}>
                         <div className={styles.descriptionSub}>
@@ -53,12 +85,8 @@ export default function Recommend() {
                     </div>
                 </>
             ) : null}
-            {/* 播放按钮 */}
-            {/* <div className={styles.play}>
-                <div className={styles.playIconWrap}>
-                    <img src={Play} className={styles.playIcon} alt="" />
-                </div>
-            </div> */}
         </div>
     )
 }
+
+export default Recommend

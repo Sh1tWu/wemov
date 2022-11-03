@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, memo } from "react"
 import { useHistory } from "react-router-dom"
 
-import { getCasts } from "@/network/casts"
+import { getCasts } from "network/casts"
 
-import IMGBASEURL from "@/network/IMAGEURL"
+import IMGBASEURL from "network/IMAGEURL"
 
-import CustomImg from "@/components/customImg/customImg"
+import CustomImg from "components/customImg/customImg"
 
 // 工具函数
-import resolveCastName from "@/utils/resolveCastName"
+import resolveCastName from "utils/resolveCastName"
 
 import {
     Container,
@@ -26,9 +26,7 @@ function CastAndCrew(props) {
 
     useEffect(() => {
         getCasts(id).then((res) => {
-            console.log(res)
             let list = res.cast.concat(res.crew)
-            console.log(list)
             setCast(list)
         })
     }, [])
@@ -45,16 +43,16 @@ function CastAndCrew(props) {
                     ? cast.map((item) => {
                           return (
                               <Item
-                                  key={item.id}
+                                  key={item.credit_id}
                                   onClick={() => toCast(item.name, item.id)}
                               >
                                   <ItemImgWrap>
                                       <CustomImg
                                           src={`${IMGBASEURL}${item.profile_path}`}
                                           type="people"
-                                          errorStyle={{
-                                              width: "180px",
-                                              //   height: "350px",
+                                          style={{
+                                              width: "100%",
+                                              height: "270px",
                                           }}
                                       />
                                   </ItemImgWrap>
@@ -73,4 +71,4 @@ function CastAndCrew(props) {
     )
 }
 
-export default CastAndCrew
+export default memo(CastAndCrew)

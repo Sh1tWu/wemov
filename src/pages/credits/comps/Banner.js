@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, memo } from "react"
+import { useErrorHandler } from "react-error-boundary"
 
-import getBackground from "@/network/background"
-import { getMovie } from "@/network/movie"
+import getBackground from "network/background"
+import { getMovie } from "network/movie"
 
-import IMGBASEURL from "@/network/IMAGEURL"
+import IMGBASEURL from "network/IMAGEURL"
 
 import {
     Container,
@@ -18,28 +19,39 @@ function Banner(props) {
     const { id } = props
     const [background, setBackground] = useState("")
     const [name, setName] = useState("")
+    const handleError = useErrorHandler()
 
-    useEffect(() => {
-        const allResults = Promise.all([
-            getMovie(id).then((res) => {
-                return res.title
-            }),
-            getBackground(id).then((res) => {
-                return res.backdrops[0].file_path
-            }),
+    useEffect(async () => {
+        await Promise.all([
+            getMovie(id)
+                .then((res) => {
+                    return res.title
+                })
+                .catch((err) => {
+                    handleError(err)
+                }),
+            getBackground(id)
+                .then((res) => {
+                    return res.backdrops[0].file_path
+                })
+                .catch((err) => {
+                    handleError(err)
+                }),
         ])
-        allResults
             .then((res) => {
+                console.log(res)
                 if (res[0]) setName(res[0])
                 if (res[1]) setBackground(res[1])
             })
-            .catch((err) => console.log(err))
-    }, [])
+            .catch((err) => {
+                handleError(err)
+            })
+    }, [id])
 
     return (
         <>
             <Container>
-                <Backdrop src={`${IMGBASEURL}/${background}`} />
+                <Backdrop src={`${IMGBASEURL}${background}`} />
                 <DescriptionWrap>
                     <Description>
                         <Title>完整演职员表</Title>
@@ -51,4 +63,4 @@ function Banner(props) {
     )
 }
 
-export default Banner
+export default memo(Banner)

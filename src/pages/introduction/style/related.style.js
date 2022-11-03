@@ -38,22 +38,19 @@ export const Item = styled.div`
     cursor: pointer;
 `
 
-export const ItemImg = styled.img.attrs((props) => ({
-    src: props.src,
-}))`
+export const ItemImgWrap = styled.div`
     width: 100%;
 `
 
+export const DescriptionWrap = styled.div`
+    position: absolute;
+`
 export const Description = styled.div`
     width: 370px;
     color: white;
     position: relative;
     top: -80px;
     padding: 0 20px 17px;
-`
-
-export const DescriptionWrap = styled.div`
-    position: absolute;
 `
 
 export const Title = styled.div`

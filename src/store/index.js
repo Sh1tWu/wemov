@@ -2,6 +2,9 @@ import { createStore, applyMiddleware, compose } from "redux"
 
 import thunk from "redux-thunk"
 
+// import { persistStore, persistReducer } from "redux-persist"
+// import storage from "redux-persist/lib/storage"
+
 import rootReducer from "./reducer"
 
 // composeEnhances函数
@@ -13,7 +16,22 @@ const composeEnhances =
 // 中间件应用
 const storeEnhancer = applyMiddleware(thunk)
 
-// store
-const store = createStore(rootReducer, composeEnhances(storeEnhancer))
+// persist
+// const rootPersistConfig = {
+//     key: "root",
+//     storage,
+//     whitelist: ["people"],
+// }
 
-export default store
+// persistedReducer
+// const persistedReducer = persistReducer(rootPersistConfig, rootReducer)
+
+// store
+export const store = createStore(
+    // persistedReducer,
+    rootReducer,
+    composeEnhances(storeEnhancer)
+)
+
+// persisStore
+// export const persistor = persistStore(store)

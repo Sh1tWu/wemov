@@ -1,10 +1,10 @@
-import React from "react"
-import { useHistory, useParams } from "react-router-dom"
+import React, { memo } from "react"
+import { useParams } from "react-router-dom"
 
 import Banner from "./comps/Banner"
 import CastAndCrew from "./comps/CastAndCrew"
 
-function Credits(props) {
+function Credits() {
     const params = useParams()
     const { movie_id } = params
     return (
@@ -15,4 +15,4 @@ function Credits(props) {
     )
 }
 
-export default Credits
+export default memo(Credits)

@@ -1,10 +1,11 @@
-import React, { memo, useState, useEffect } from "react"
+import React, { memo, useEffect, useState } from "react"
+import { useSelector, useDispatch, shallowEqual } from "react-redux"
+import { useLocation } from "react-router-dom"
 
 import {
     Container,
     Wrap,
     ProfileImgWrap,
-    ProfileImg,
     InfoWrap,
     Name,
     JobsWrap,
@@ -14,24 +15,31 @@ import {
 
 import CustomImg from "components/customImg/customImg"
 
-import getPeople from "network/people"
-
-import IMAGEURL from "network/IMAGEURL"
+import { getPeopleInformationAction } from "../store/actionCreator"
 
 const Banner = memo((props) => {
-    const { id } = props
     const { jobs } = props
-    const [info, setInfo] = useState({})
+    const dispatch = useDispatch()
+    const location = useLocation()
+    const { id } = location.state
+    const { peopleInfo } = useSelector(
+        (state) => ({
+            peopleInfo: state.people.personalityInformation,
+        }),
+        shallowEqual
+    )
 
     useEffect(() => {
-        getPeople(id)
-            .then((res) => {
-                setInfo(res)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }, [])
+        let mounted = true
+        // 获取人物基本信息
+        dispatch(getPeopleInformationAction(id))
+        // 清除副作用
+        return function cleanup() {
+            mounted = false
+        }
+    }, [id])
+
+    console.log(peopleInfo)
 
     return (
         <>
@@ -39,20 +47,20 @@ const Banner = memo((props) => {
                 <Wrap>
                     <ProfileImgWrap>
                         <CustomImg
-                            src={`${IMAGEURL}${info.profile_path}`}
+                            src={`${peopleInfo.profile_path}`}
                             type="people"
                         />
                     </ProfileImgWrap>
                     <InfoWrap>
-                        <Name>{info.name}</Name>
+                        <Name>{peopleInfo.name}</Name>
                         <JobsWrap>
                             {jobs
-                                ? jobs.map((item) => {
-                                      return <Jobs>{item}</Jobs>
+                                ? jobs.slice(0, 5).map((item) => {
+                                      return <Jobs key={item}>{item}</Jobs>
                                   })
                                 : null}
                         </JobsWrap>
-                        <Introduction>{info.biography}</Introduction>
+                        <Introduction>{peopleInfo.biography}</Introduction>
                     </InfoWrap>
                 </Wrap>
             </Container>

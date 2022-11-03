@@ -1,5 +1,10 @@
-import { ADD_RECOMMENDLIST, ADD_IMAGES, ADD_LATESTMOVIE } from "./constant"
-import { getRecommendList } from "@/network/recommend"
+import {
+    ADD_RECOMMENDLIST,
+    ADD_IMAGES,
+    ADD_LATESTMOVIE,
+    ADD_ERROR,
+} from "./constant"
+import { getRecommendList } from "network/recommend"
 
 export const addRecommendListAction = (list) => ({
     type: ADD_RECOMMENDLIST,
@@ -11,6 +16,11 @@ export const addImagesPathAction = (path) => ({
     path,
 })
 
+export const addErrorAction = (err) => ({
+    type: ADD_ERROR,
+    err,
+})
+
 // export const addLatestMovieAction = (movie) => ({
 //     type: ADD_LATESTMOVIE,
 //     movie,
@@ -18,10 +28,15 @@ export const addImagesPathAction = (path) => ({
 
 export const getRecommendListAction = () => {
     return (dispatch) => {
-        getRecommendList().then((res) => {
-            console.log(res)
-            dispatch(addRecommendListAction(res.results))
-        })
+        getRecommendList()
+            .then((res) => {
+                console.log(res)
+                if (res) dispatch(addRecommendListAction(res.results))
+            })
+            .catch((err) => {
+                console.log(err)
+                throw Error(err)
+            })
     }
 }
 

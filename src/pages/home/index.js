@@ -1,17 +1,19 @@
 import React from "react"
+import { ErrorBoundary } from "react-error-boundary"
 
 import Recommend from "./comps/Recommend"
 import CarouselQueue from "./comps/CarouselQueue"
 import Carousel from "./comps/Carousel"
 
-import EldenRing from "../../assets/img/testImg/sourceImg/EldenRing.png"
-import EldenRing2 from "../../assets/img/testImg/carouselQueueImg/EldenRing.png"
+import { CarouselQueueError } from "./error/CarouselQueueError"
 
 export default function Home() {
     return (
         <div>
             <Recommend />
-            <CarouselQueue />
+            <ErrorBoundary FallbackComponent={CarouselQueueError}>
+                <CarouselQueue />
+            </ErrorBoundary>
             <Carousel />
         </div>
     )

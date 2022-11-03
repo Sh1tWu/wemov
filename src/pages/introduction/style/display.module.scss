@@ -1,9 +1,18 @@
 .display {
     width: 100%;
+    .displayImgWrap {
+        width: 100%;
+        height: calc(100vh - 50px);
+    }
     .displayImg {
         width: 100%;
         height: calc(100vh - 50px);
         object-fit: cover;
+    }
+    .imgErrorCover {
+        width: 100%;
+        height: calc(100vh - 50px);
+        background-color: #999999;
     }
     .descriptionWrap {
         color: white;

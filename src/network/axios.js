@@ -8,43 +8,35 @@ export default function axios(config) {
 
         instance.interceptors.request.use(
             (config) => {
-                // console.log("请求被拦截")
-                // config.data = JSON.stringify(config.data)
-                // config.headers = {
-                //     "Content-Type": "application/x-www-form-urlencoded",
-                // }
-                // const token = localStorage.getItem("token")
-                // if (token) {
-                //     config.params = { token: token }
-                //     config.headers.token = token
-                // }
-                // console.log(config)
                 return config
             },
             (err) => {
                 console.log("来到错误请求")
-                console.log(err)
+
+                const delay = new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve()
+                    }, 1000)
+                })
+
+                return delay
+                    .then(() => axios(config))
+                    .catch((err) => {
+                        reject(err)
+                    })
             }
         )
 
         instance.interceptors.response.use(
             (res) => {
-                // console.log("响应被拦截")
-                // console.log(res)
-                return res.data
+                resolve(res.data)
             },
             (err) => {
                 console.log("来到错误响应")
-                console.log(err)
+                reject(err)
             }
         )
 
         instance(config)
-            .then((res) => {
-                resolve(res)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
     })
 }

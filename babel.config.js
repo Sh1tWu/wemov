@@ -3,7 +3,16 @@ const presets = [
     ["@babel/preset-react"],
 ]
 
-const plugins = []
+const plugins = [
+    [
+        "babel-plugin-styled-components",
+        {
+            minify: true,
+            transpileTemplateLiterals: true,
+            pure: true,
+        },
+    ],
+]
 const isProduction = process.env.NODE_ENV === "production"
 
 if (!isProduction) {

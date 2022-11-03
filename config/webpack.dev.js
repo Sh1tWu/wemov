@@ -4,7 +4,7 @@ const resolveApp = require("./paths")
 
 module.exports = {
     mode: "development",
-    devtool: "cheap-source-map",
+    devtool: "source-map",
     plugins: [new ReactRefreshWebpackPlugin()],
     devServer: {
         port: 8080,
@@ -13,30 +13,31 @@ module.exports = {
         // static:
         proxy: {
             "/api": {
-                target: "https://api.themoviedb.org/3",
+                target: "http://api.themoviedb.org/3",
                 pathRewrite: {
                     "^/api": "",
                 },
-                secure: false,
+                // secure: false,
                 changeOrigin: true,
             },
             "/img": {
-                target: "https://image.tmdb.org/t/p",
+                target: "http://image.tmdb.org/t/p",
                 changeOrigin: true,
                 pathRewrite: {
                     "^/img": "",
                 },
-                secure: true,
+                // secure: true,
                 changeOrigin: true,
             },
         },
-        historyApiFallback: {
-            rewrites: [
-                {
-                    from: /abc/,
-                    to: "index.html",
-                },
-            ],
-        },
+        historyApiFallback: true,
+        // {
+        //     rewrites: [
+        //         {
+        //             from: /abc/,
+        //             to: "index.html",
+        //         },
+        //     ],
+        // },
     },
 }

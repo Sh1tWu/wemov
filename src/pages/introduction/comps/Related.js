@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, memo } from "react"
 import { useHistory } from "react-router-dom"
+import { useErrorHandler } from "react-error-boundary"
 
 import getRelatedFilms from "network/relatedFilms"
 import { getMovie } from "network/movie"
@@ -11,7 +12,8 @@ import {
     Header,
     Queue,
     Item,
-    ItemImg,
+    ItemImgWrap,
+    DescriptionWrap,
     Description,
     Title,
     Info,
@@ -21,6 +23,7 @@ import {
 
 function Related(props) {
     const history = useHistory()
+    const handleError = useErrorHandler()
 
     const { id } = props
     const [filmsList, setFilmsList] = useState([])
@@ -28,19 +31,29 @@ function Related(props) {
 
     useEffect(() => {
         // 获取相关影片
-        getRelatedFilms(id).then((res) => {
-            console.log(res.results)
-            setFilmsList(res.results.splice(0, 12))
-        })
+        getRelatedFilms(id)
+            .then((res) => {
+                setFilmsList(res.results.splice(0, 12))
+            })
+            .catch((err) => {
+                handleError(err)
+            })
         // 获取国家名字
-        getMovie(id).then((res) => {
-            setCountry(res.production_countries[0].name)
-        })
+        getMovie(id)
+            .then((res) => {
+                if (res.production_countries.length === 0) return
+                setCountry(res.production_countries[0].name)
+            })
+            .catch((err) => {
+                handleError(err)
+            })
     }, [id])
 
     const toMovie = (movie_id) => {
         history.push(`/introduction/${movie_id}`)
     }
+
+    // throw Error("target")
 
     return (
         <Container>
@@ -55,24 +68,31 @@ function Related(props) {
                                       toMovie(item.id)
                                   }}
                               >
-                                  <CustomImg
-                                      src={item.backdrop_path}
-                                      type="img"
-                                      style={{ width: "100%", height: "208px" }}
-                                  />
-                                  <Description>
-                                      <Title>{item.title}</Title>
-                                      <Info>
-                                          <Country>{country}</Country>
-                                          <Date>
-                                              {item.release_date
-                                                  ? item.release_date.split(
-                                                        "-"
-                                                    )[0]
-                                                  : null}
-                                          </Date>
-                                      </Info>
-                                  </Description>
+                                  <ItemImgWrap>
+                                      <CustomImg
+                                          src={item.backdrop_path}
+                                          type="img"
+                                          style={{
+                                              width: "100%",
+                                              height: "208px",
+                                          }}
+                                      />
+                                  </ItemImgWrap>
+                                  <DescriptionWrap>
+                                      <Description>
+                                          <Title>{item.title}</Title>
+                                          <Info>
+                                              <Country>{country}</Country>
+                                              <Date>
+                                                  {item.release_date
+                                                      ? item.release_date.split(
+                                                            "-"
+                                                        )[0]
+                                                      : null}
+                                              </Date>
+                                          </Info>
+                                      </Description>
+                                  </DescriptionWrap>
                               </Item>
                           )
                       })
@@ -82,4 +102,4 @@ function Related(props) {
     )
 }
 
-export default Related
+export default memo(Related)

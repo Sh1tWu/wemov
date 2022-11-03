@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, memo } from "react"
+import { useErrorHandler } from "react-error-boundary"
 
 // 网络请求
 import { getReviews } from "network/reviews"
@@ -15,6 +16,7 @@ import {
     Container,
     Title,
     Display,
+    EmptyQueue,
     Header,
     ReviewsQueue,
     ReviewsQueueItem,
@@ -31,7 +33,7 @@ import {
 } from "../style/reviews.style"
 
 // Icon
-import UserIcon from "@/assets/img/icon/user.svg"
+import UserIcon from "assets/img/icon/user.svg"
 
 const Reviews = (props) => {
     const { id } = props
@@ -39,24 +41,29 @@ const Reviews = (props) => {
     const [mainReviewList, setMainReviewList] = useState([])
     const [secondaryReviewList, setSecondaryReviewList] = useState([])
     const [reviewListLength, setReviewListLength] = useState(0)
+    const handleError = useErrorHandler()
 
     useEffect(() => {
-        getReviews(id).then((res) => {
-            setReviewListLength(res.results.length)
-            let results = res.results.splice(0, 8)
-            results.forEach((item) => {
-                if (item.author_details.avatar_path) {
-                    item.author_details.avatar_path = resolveAvatarPath(
-                        item.author_details.avatar_path
-                    )
-                }
-                if (item.updated_at) {
-                    item.updated_at = resolveDate(item.updated_at)
-                }
+        getReviews(id)
+            .then((res) => {
+                setReviewListLength(res.results.length)
+                let results = res.results.splice(0, 8)
+                results.forEach((item) => {
+                    if (item.author_details.avatar_path) {
+                        item.author_details.avatar_path = resolveAvatarPath(
+                            item.author_details.avatar_path
+                        )
+                    }
+                    if (item.updated_at) {
+                        item.updated_at = resolveDate(item.updated_at)
+                    }
+                })
+                setMainReviewList(results)
+                setSecondaryReviewList(results.slice(0, 6))
             })
-            setMainReviewList(results)
-            setSecondaryReviewList(results.slice(0, 6))
-        })
+            .catch((err) => {
+                handleError(err)
+            })
     }, [id])
 
     const reviewsQueue =
@@ -136,12 +143,15 @@ const Reviews = (props) => {
             <Container>
                 <Header>
                     <Title>评价</Title>
-                    <Display>查看全部({reviewListLength})</Display>
                 </Header>
-                <ReviewsQueue>{reviewsQueue}</ReviewsQueue>
+                {reviewListLength !== 0 ? (
+                    <ReviewsQueue>{reviewsQueue}</ReviewsQueue>
+                ) : (
+                    <EmptyQueue>空空如也</EmptyQueue>
+                )}
             </Container>
         </>
     )
 }
 
-export default Reviews
+export default memo(Reviews)

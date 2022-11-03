@@ -23,7 +23,6 @@
         height: 50px;
         padding-bottom: 1px;
         margin: 0 auto;
-
         .logo {
             display: flex;
             justify-content: flex-end;
@@ -33,6 +32,7 @@
             padding-right: 20px;
             padding-left: 10px;
             border-right: 0.5px solid #c4c4c4;
+            cursor: pointer;
             .logoName {
                 padding-top: 6px;
                 font-size: 18px;
@@ -50,7 +50,8 @@
         .searchBar {
             width: 400px;
             .searchBox {
-                padding: 11px;
+                width: 350px;
+                padding: 15px;
                 padding-left: 40px;
                 font-size: 18px;
                 border: none;
@@ -59,7 +60,7 @@
                     font-size: 18px;
                 }
                 &:focus {
-                    background-color: #e2e2e2;
+                    background-color: #f3f3f3;
                 }
             }
             .searchIcon {
@@ -67,7 +68,15 @@
                 width: 20px;
                 height: 20px;
                 top: -2px;
-                right: 240px;
+                right: 340px;
+            }
+            .loadingIcon {
+                position: relative;
+                width: 25px;
+                height: 25px;
+                top: -2px;
+                right: 50px;
+                cursor: pointer;
             }
         }
         .info {

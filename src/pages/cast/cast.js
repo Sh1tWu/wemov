@@ -1,70 +1,89 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, memo } from "react"
+import { useDispatch, useSelector, shallowEqual } from "react-redux"
 import { useLocation } from "react-router-dom"
 
 import Banner from "./comps/Banner"
 import List from "./comps/List"
 
-import getPerson from "network/person"
-
-// import removeDuplications from "utils/removeDuplications"
-import classifyMovie from "utils/classifyMovie"
+import { getMoviesAction } from "./store/actionCreator"
 
 function Cast() {
-    const [jobs, setJobs] = useState([])
-    const [actingMovie, setActingMovie] = useState([])
-    const [categoryMovie, setCategoryMovie] = useState(new Map())
-    const location = useLocation()
-    const routerState = location.state
+    const dispatch = useDispatch()
 
+    const { castMovie, crewMovie } = useSelector(
+        (state) => ({
+            castMovie: state.people.castMovie,
+            crewMovie: state.people.crewMovie,
+        }),
+        shallowEqual
+    )
+
+    // 职位
+    const [jobs, setJobs] = useState([])
+
+    // route
+    const location = useLocation()
+    const { id } = location.state
+
+    // 职位分类
     useEffect(() => {
-        let mounted = false
-        getPerson(routerState.id).then((res) => {
-            console.log(res)
-            let appointments = res.crew.map((item) => {
-                return item.job
-            })
-            let set = new Set(appointments)
-            // 主演电影
-            setActingMovie(res.cast)
-            // 职位去重
-            let results = Array.from(set)
-            // 职位
-            setJobs(results)
-            // 担任职位的电影归类
-            let categoryResults = classifyMovie(results, res.crew)
-            setCategoryMovie(categoryResults)
-        })
+        const jobsCollection = []
+        if (JSON.stringify(crewMovie) !== "{}") {
+            for (let item in crewMovie) {
+                jobsCollection.push(item)
+            }
+            setJobs(jobsCollection)
+        }
+    }, [crewMovie])
+
+    // dispatch人物相关影视信息请求
+    useEffect(() => {
+        let mounted = true
+        dispatch(getMoviesAction(id))
         return function cleanup() {
             mounted = false
         }
-    }, [routerState.id])
+    }, [id])
+
+    // 组装List
+    const handleList = () => {
+        const lists = []
+        if (JSON.stringify(crewMovie) !== "{}") {
+            for (let item in crewMovie) {
+                lists.push(
+                    <List
+                        key={item}
+                        title={item}
+                        length={crewMovie[item].length}
+                        list={
+                            crewMovie[item].length > 12
+                                ? crewMovie[item].slice(0, 12)
+                                : crewMovie[item]
+                        }
+                    ></List>
+                )
+            }
+            return lists
+        } else {
+            return null
+        }
+    }
 
     return (
         <>
-            <Banner id={routerState.id} jobs={jobs} />
-            {actingMovie ? (
+            <Banner jobs={jobs} />
+
+            {castMovie ? (
                 <List
-                    length={actingMovie.length}
-                    list={actingMovie.slice(0, 12)}
-                    title="ACTOR"
+                    length={castMovie.length}
+                    list={castMovie.slice(0, 12)}
+                    title="Actor"
                 />
             ) : null}
 
-            {jobs
-                ? jobs.map((item) => {
-                      if (categoryMovie.size) {
-                          return (
-                              <List
-                                  length={categoryMovie.get(item).length}
-                                  list={categoryMovie.get(item).slice(0, 12)}
-                                  title={item}
-                              />
-                          )
-                      }
-                  })
-                : null}
+            {Object.keys(crewMovie).length ? handleList() : null}
         </>
     )
 }
 
-export default Cast
+export default memo(Cast)

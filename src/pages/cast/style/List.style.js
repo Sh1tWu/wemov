@@ -46,7 +46,6 @@ export const Item = styled.div`
     height: 208px;
     margin-bottom: 20px;
     margin-right: 10px;
-    /* background-color: white; */
     cursor: pointer;
 `
 

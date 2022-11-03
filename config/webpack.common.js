@@ -15,8 +15,9 @@ const commonConfig = (isProduction = false) => {
         output: {
             path: resolveApp("./dist"),
             filename: "js/[name].[chunkhash:6].bundle.js",
-            // 想定制[name]就来点magic comments
+            // 想定制[name]就来点magic comments!
             chunkFilename: "js/[name].[contenthash:6].chunk.js",
+            publicPath: "/",
         },
         resolve: {
             extensions: [".js", ".json", ".jsx"],
@@ -46,10 +47,11 @@ const commonConfig = (isProduction = false) => {
                         isProduction
                             ? MiniCssExtractPlugin.loader
                             : "style-loader",
-                        {
-                            loader: "css-loader",
-                            options: { modules: undefined, importLoaders: 1 },
-                        },
+                        // {
+                        // loader:
+                        "css-loader",
+                        // options: { modules: undefined, importLoaders: 1 },
+                        // },
                         "postcss-loader",
                     ],
                     sideEffects: true,
@@ -60,10 +62,11 @@ const commonConfig = (isProduction = false) => {
                         isProduction
                             ? MiniCssExtractPlugin.loader
                             : "style-loader",
-                        {
-                            loader: "css-loader",
-                            options: { modules: undefined, importLoaders: 1 },
-                        },
+                        // {
+                        // loader:
+                        "css-loader",
+                        // options: { modules: undefined, importLoaders: 1 },
+                        // },
                         "postcss-loader",
                         "sass-loader",
                     ],
@@ -77,7 +80,7 @@ const commonConfig = (isProduction = false) => {
                     },
                     parser: {
                         dataUrlCondition: {
-                            maxSize: 100 * 1024,
+                            maxSize: 50 * 1024,
                         },
                     },
                 },
@@ -125,7 +128,9 @@ const commonConfig = (isProduction = false) => {
                     },
                 },
             },
-            runtimeChunk: "single",
+            runtimeChunk: {
+                name: (entryPoint) => `runtime~${entryPoint.name}`,
+            },
         },
         // stats: "errors-only",
     }

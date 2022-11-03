@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import { useSelector, useDispatch, shallowEqual } from "react-redux"
 import { useHistory } from "react-router-dom"
+import { useErrorHandler } from "react-error-boundary"
 
 // 样式
 import styles from "../style/carouselQueue.module.scss"
@@ -11,16 +12,19 @@ import { getRecommendListAction } from "../store/actionCreator"
 // 常量
 import IMGBASEURL from "network/IMAGEURL"
 
-export default function CarouselQueue() {
+function CarouselQueue() {
     const history = useHistory()
+    const dispatch = useDispatch()
+    const handleError = useErrorHandler()
+
     // 推荐列表请求和redux数据合并
     const { recommendList } = useSelector(
         (state) => ({
-            recommendList: state.getIn(["home", "recommendList"]),
+            recommendList: state.home.recommendList,
         }),
         shallowEqual
     )
-    const dispatch = useDispatch()
+
     useEffect(() => {
         dispatch(getRecommendListAction())
     }, [dispatch])
@@ -88,3 +92,5 @@ export default function CarouselQueue() {
         </>
     )
 }
+
+export default CarouselQueue

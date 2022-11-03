@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
+import { useSelector, shallowEqual } from "react-redux"
 
 // style
 import style from "../style/display.module.scss"
@@ -10,26 +11,54 @@ import Clock from "assets/img/icon/clock.svg"
 // constants
 import IMGBASEURL from "network/IMAGEURL"
 
-import { getMovie } from "network/movie"
+function Display() {
+    const { movie } = useSelector(
+        (state) => ({
+            movie: state.introduction.movie,
+        }),
+        shallowEqual
+    )
 
-export default function Display(props) {
-    const { id } = props
-    const [movie, setMovie] = useState({})
+    const [imgError, setImgError] = useState(false)
 
-    useEffect(() => {
-        getMovie(id).then((res) => {
-            setMovie(res)
-        })
-    }, [id])
+    function resetImgUrl(e, imgSrc, maxErrorNum) {
+        // const timer = setTimeout(() => {
+        //     if (maxErrorNum > 0) {
+        //         console.log(maxErrorNum)
+        //         maxErrorNum -= 1
+        //         e.target.src = imgSrc
+        //         resetImgUrl(e, imgSrc, maxErrorNum)
+        //     } else {
+        console.log("请求图片失败")
+        // clearTimeout(timer)
+        setImgError(true)
+        e.target.onerror = null
+        //     }
+        // }, 2000)
+    }
 
     return (
         <div className={style.display}>
             {/* 图片 */}
-            <img
-                className={style.displayImg}
-                src={`${IMGBASEURL}${movie.backdrop_path}`}
-                alt="电影海报"
-            />
+            {imgError === false ? (
+                <div className={style.displayImgWrap}>
+                    <img
+                        className={style.displayImg}
+                        src={`${IMGBASEURL}${movie.backdrop_path}`}
+                        alt="电影海报"
+                        onError={(e) => {
+                            resetImgUrl(
+                                e,
+                                `${IMGBASEURL}${movie.backdrop_path}`,
+                                3
+                            )
+                        }}
+                    />
+                </div>
+            ) : (
+                <div className={style.imgErrorCover}></div>
+            )}
+
             {/* 文字描述 */}
             <div className={style.descriptionWrap}>
                 <div className={style.description}>
@@ -104,3 +133,5 @@ export default function Display(props) {
         </div>
     )
 }
+
+export default Display

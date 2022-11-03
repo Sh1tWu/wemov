@@ -19,6 +19,7 @@ export const Container = styled.div`
         width: 370px;
     }
 `
+
 export const Header = styled.div`
     width: 100%;
     display: flex;
@@ -34,16 +35,25 @@ export const Display = styled.div`
     cursor: pointer;
 `
 
+export const EmptyQueue = styled.div`
+    width: 50%;
+    padding: 20px 10px;
+    margin: 0 auto;
+    font-size: 18px;
+    text-align: center;
+    background-color: white;
+`
+
 export const ReviewsQueue = styled.div`
     width: 100%;
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
 `
 
 export const ReviewsQueueItem = styled.div`
-    width: 370px;
+    width: 350px;
     height: 300px;
     display: flex;
     align-self: flex-start;
@@ -52,6 +62,8 @@ export const ReviewsQueueItem = styled.div`
     padding-top: 10px;
     padding-left: 20px;
     padding-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     background-color: white;
     margin-bottom: 10px;
 `
@@ -66,6 +78,7 @@ export const UserWrap = styled.div`
     display: flex;
     align-items: center;
 `
+
 export const AvatarWrap = styled.div`
     width: 40px;
 `

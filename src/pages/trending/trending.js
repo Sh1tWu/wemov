@@ -13,7 +13,7 @@ import {
 
 const Trending = (props) => {
     const { recommendList } = useSelector((state) => ({
-        recommendList: state.getIn(["home", "recommendList"]),
+        recommendList: state.home.recommendList,
     }))
     const history = useHistory()
 

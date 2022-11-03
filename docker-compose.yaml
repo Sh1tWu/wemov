@@ -1,0 +1,8 @@
+services:
+  nginx:
+    image: nginx:stable-perl
+    ports:
+      - "3000:80"
+    volumes:
+      - ./dist:/usr/share/nginx/html
+    command: /bin/bash -c "nginx -g 'daemon off;'"

@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react"
-
+import React, { useState, useEffect, memo } from "react"
 import { useHistory } from "react-router-dom"
+// import { useErrorHandler } from "react-error-boundary"
+import { useSelector, useDispatch, shallowEqual } from "react-redux"
 
 import style from "../style/casts.module.scss"
 
-import { getCasts } from "network/casts"
-
-import IMGBASEURL from "network/IMAGEURL"
+import { getCastsAction } from "../store/actionCreators"
 
 import useWidth from "hooks/useWidth"
 
@@ -15,23 +14,37 @@ import CustomImg from "components/customImg/customImg"
 // 工具函数
 import resolveCastName from "utils/resolveCastName"
 
-export default function Casts(props) {
+function Casts(props) {
+    const { casts } = useSelector(
+        (state) => ({
+            casts: state.introduction.casts,
+        }),
+        shallowEqual
+    )
+
     const { id } = props
     const history = useHistory()
-    const [casts, setCasts] = useState([])
+    const dispatch = useDispatch()
+
     const [mainCasts, setMainCasts] = useState([])
     const [secondaryCasts, setSecondaryCasts] = useState([])
     const windowWidth = useWidth()
 
     useEffect(() => {
-        getCasts(id).then((res) => {
-            setCasts(res.cast)
-        })
+        let mounted = true
+        dispatch(getCastsAction(id))
+        return function cleanup() {
+            mounted = false
+        }
     }, [id])
 
     useEffect(() => {
+        let mounted = true
         setMainCasts(casts.slice(0, 8))
         setSecondaryCasts(casts.slice(0, 6))
+        return function cleanup() {
+            mounted = false
+        }
     }, [casts])
 
     // 跳转至演员
@@ -43,18 +56,11 @@ export default function Casts(props) {
 
     // 跳转至指定职员页面
     function toCast(name, id) {
-        console.log(name, id)
         let urlName = resolveCastName(name)
         history.push({ pathname: `/cast/${urlName}`, state: { id: id } })
     }
 
-    function isUsefulUrl(profilePath) {
-        if (profilePath) {
-            return `${IMGBASEURL}${profilePath}`
-        } else {
-            return null
-        }
-    }
+    // throw Error("Casts")
 
     return (
         <div className={style.casts}>
@@ -126,3 +132,5 @@ export default function Casts(props) {
         </div>
     )
 }
+
+export default memo(Casts)

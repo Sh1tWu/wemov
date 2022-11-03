@@ -1,12 +1,14 @@
-import React from "react";
+import React from "react"
 
-import styles from "../style/carousel.module.scss";
+import styles from "../style/carousel.module.scss"
 
-export default function Carousel() {
+function Carousel() {
     return (
         <div className={styles.carousel}>
             <div className={styles.display}></div>
             <div className={styles.description}></div>
         </div>
-    );
+    )
 }
+
+export default Carousel

@@ -9,7 +9,6 @@ const defaultState = {
 function reducer(state = defaultState, action) {
     switch (action.type) {
         case ADD_MOVIE:
-            console.log(state.movie, action)
             return { ...state, movie: action.movie }
         case ADD_CASTS:
             return { ...state, casts: action.casts }

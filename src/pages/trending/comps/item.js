@@ -1,9 +1,9 @@
-import React from "react"
+import React, { memo } from "react"
 import { useHistory } from "react-router-dom"
 
-import IMGBASEURL from "@/network/IMAGEURL"
+import IMGBASEURL from "network/IMAGEURL"
 
-import arrow from "@/assets/img/icon/arrow_right_gray.svg"
+import arrow from "assets/img/icon/arrow_right_gray.svg"
 
 import {
     Container,
@@ -58,4 +58,4 @@ const Item = (props) => {
     )
 }
 
-export default Item
+export default memo(Item)

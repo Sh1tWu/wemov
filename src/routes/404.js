@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { useHistory } from "react-router-dom"
 
@@ -12,7 +12,7 @@ export default function NotExistRoute() {
             history.push("/")
         }, 3000)
         return () => clearTimeout(redirectToHome)
-    })
+    }, [])
 
     // 倒计时
     useEffect(() => {
