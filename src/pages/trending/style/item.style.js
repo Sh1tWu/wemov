@@ -33,9 +33,8 @@ export const RightPart = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
     height: 280px;
-    padding: 0 0 15px 20px;
+    padding: 20px 0 15px 20px;
     @media screen and (max-width: 969px) {
         margin-top: 25px;
     }
@@ -69,9 +68,22 @@ export const Date = styled.div`
     font-size: 14px;
 `
 
-export const Overview = styled.p`
+export const Overview = styled.div`
+    height: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* overflow: hidden; */
+    /*文本不会换行*/
+    /* white-space: nowrap; */
+    /*当文本溢出包含元素时，以省略号表示超出的文本*/
+    /* text-overflow: ellipsis; */
+
     font-size: 14px;
-    padding-right: 10px;
+    padding-right: 15px;
+    /* ::after {
+        position: relative;
+        content: "...";
+    } */
 `
 
 export const OptionBar = styled.div`
@@ -79,6 +91,7 @@ export const OptionBar = styled.div`
     justify-content: space-between;
     width: 100%;
     font-weight: 600;
+    margin-top: 10px;
 `
 
 export const Vote = styled.span`
