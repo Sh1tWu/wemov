@@ -6,6 +6,9 @@ module.exports = {
     mode: "development",
     devtool: "source-map",
     plugins: [new ReactRefreshWebpackPlugin()],
+    optimization: {
+        usedExports: true,
+    },
     devServer: {
         port: 8080,
         hot: "only",

@@ -11,12 +11,16 @@ const devConfig = require("./webpack.dev")
 
 const commonConfig = (isProduction = false) => {
     return {
-        entry: "./src/index.js",
+        entry: {
+            main: {
+                import: "./src/index.js",
+            },
+        },
         output: {
             path: resolveApp("./dist"),
-            filename: "js/[name].[chunkhash:6].bundle.js",
+            filename: "js/[name].[chunkhash:6].js",
             // 想定制[name]就来点magic comments!
-            chunkFilename: "js/[name].[contenthash:6].chunk.js",
+            chunkFilename: "js/[name].[contenthash:6].js",
             publicPath: "/",
         },
         resolve: {
@@ -47,11 +51,10 @@ const commonConfig = (isProduction = false) => {
                         isProduction
                             ? MiniCssExtractPlugin.loader
                             : "style-loader",
-                        // {
-                        // loader:
-                        "css-loader",
-                        // options: { modules: undefined, importLoaders: 1 },
-                        // },
+                        {
+                            loader: "css-loader",
+                            options: { modules: true, importLoaders: 1 },
+                        },
                         "postcss-loader",
                     ],
                     sideEffects: true,
@@ -62,11 +65,10 @@ const commonConfig = (isProduction = false) => {
                         isProduction
                             ? MiniCssExtractPlugin.loader
                             : "style-loader",
-                        // {
-                        // loader:
-                        "css-loader",
-                        // options: { modules: undefined, importLoaders: 1 },
-                        // },
+                        {
+                            loader: "css-loader",
+                            options: { modules: undefined, importLoaders: 2 },
+                        },
                         "postcss-loader",
                         "sass-loader",
                     ],
@@ -105,33 +107,6 @@ const commonConfig = (isProduction = false) => {
                 minify: isProduction ? true : false,
             }),
         ],
-        optimization: {
-            // chunkIds: isProduction ? "deterministic" : "named",
-            splitChunks: {
-                chunks: "all",
-                minSize: 200 * 1024,
-                maxSize: 200 * 1024,
-                minChunks: 2,
-                cacheGroups: {
-                    vendors: {
-                        test: /[\\/]node_modules[\\/]/,
-                        priority: -10,
-                        name: "chunk-vendors",
-                        // filename: "vendors_[id].js",
-                    },
-                    common: {
-                        minChunks: 2,
-                        priority: -20,
-                        name: "chunk-common",
-                        reuseExistingChunk: true,
-                        // filename: "common_[id].js",
-                    },
-                },
-            },
-            runtimeChunk: {
-                name: (entryPoint) => `runtime~${entryPoint.name}`,
-            },
-        },
         // stats: "errors-only",
     }
 }
@@ -141,6 +116,5 @@ module.exports = function (env) {
     process.env.NODE_ENV = isProduction ? "production" : "development"
     const config = isProduction ? prodConfig : devConfig
     const mergeConfig = merge(commonConfig(isProduction), config)
-
     return mergeConfig
 }

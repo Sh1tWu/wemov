@@ -52,8 +52,8 @@ const Search = dynamic(() =>
 )
 const NotExistRoute = dynamic(() =>
     import(
-        /* webpackChunkName: 'NotExistRoute' */
-        /* webpackPrefetch:true */
+        // /* webpackChunkName: 'NotExistRoute' */
+        // /* webpackPrefetch:true */
         "./404"
     )
 )

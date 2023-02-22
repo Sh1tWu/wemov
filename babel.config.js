@@ -5,6 +5,14 @@ const presets = [
 
 const plugins = [
     [
+        "@babel/plugin-transform-runtime",
+        {
+            corejs: false,
+            helpers: true,
+            regenerator: false,
+        },
+    ],
+    [
         "babel-plugin-styled-components",
         {
             minify: true,

@@ -1,21 +1,33 @@
-import axios from "./axios"
+import axiosInstance from "./axios"
 
 const http = {
     get(url, params) {
-        const config = {
-            method: "get",
-            url: url,
-        }
-        if (params) config.params = params
-        return axios(config)
+        params = params || {}
+        return new Promise((resolve, reject) => {
+            axiosInstance
+                .get(url, params)
+                .then((res) => {
+                    resolve(res)
+                })
+                .catch((err) => {
+                    console.log(err)
+                    reject(err)
+                })
+        })
     },
     post(url, params) {
-        const config = {
-            method: "post",
-            url: url,
-        }
-        if (params) config.data = params
-        return axios(config)
+        params = params || {}
+        return new Promise((resolve, reject) => {
+            axiosInstance
+                .post(url, params)
+                .then((res) => {
+                    resolve(res)
+                })
+                .catch((err) => {
+                    console.log(err)
+                    reject(err)
+                })
+        })
     },
 }
 
