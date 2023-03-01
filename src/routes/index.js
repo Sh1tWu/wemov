@@ -59,19 +59,20 @@ const NotExistRoute = dynamic(() =>
 )
 
 const routes = [
-    {
-        // 首页
-        path: "/home",
-        exact: true,
-        component: Home,
-    },
+    // {
+    //     // 首页
+    //     path: "/home",
+    //     exact: true,
+    //     component: Home,
+    // },
     {
         path: "/",
         name: "HomeRedirect",
         exact: true,
-        render() {
-            return <Redirect to="/home" />
-        },
+        component: Home,
+        // render() {
+        //     return <Redirect to="/home" />
+        // },
     },
     {
         // 影片详情页

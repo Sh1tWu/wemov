@@ -42,7 +42,7 @@ function SearchCast() {
                                   >
                                       <div>
                                           <CustomImg
-                                              src={item.profile_path}
+                                              src={item?.profile_path}
                                               type={"people"}
                                               style={{
                                                   width: "100%",

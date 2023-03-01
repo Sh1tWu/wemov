@@ -4,7 +4,7 @@ const axiosInstance = Axios.create({
     timeout: 5000,
 })
 
-instance.interceptors.request.use(
+axiosInstance.interceptors.request.use(
     (config) => {
         return config
     },
@@ -14,9 +14,9 @@ instance.interceptors.request.use(
     }
 )
 
-instance.interceptors.response.use(
+axiosInstance.interceptors.response.use(
     (res) => {
-        return res
+        return res.data
     },
     (err) => {
         console.log("来到错误响应")

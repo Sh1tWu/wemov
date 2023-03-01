@@ -40,7 +40,9 @@ function Display() {
     return (
         <div className={style.display}>
             {/* 图片 */}
-            {imgError === false ? (
+            {movie.toString !== `{}` &&
+            movie.backdrop_path &&
+            imgError === false ? (
                 <div className={style.displayImgWrap}>
                     <img
                         className={style.displayImg}

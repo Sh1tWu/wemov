@@ -30,7 +30,6 @@ export const getRecommendListAction = () => {
     return (dispatch) => {
         getRecommendList()
             .then((res) => {
-                console.log(res)
                 if (res) dispatch(addRecommendListAction(res.results))
             })
             .catch((err) => {

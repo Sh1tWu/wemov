@@ -14,15 +14,7 @@ const CustomImg = memo((props) => {
 
     return (
         <>
-            {errorLoaded === true ? (
-                <div
-                    style={{
-                        ...props.style,
-                        width: "100%",
-                        backgroundColor: "#999999",
-                    }}
-                ></div>
-            ) : (
+            {props?.src !== null && errorLoaded === false ? (
                 <Image
                     src={`${IMAGEURL}${props.src}`}
                     preview={false}
@@ -33,6 +25,14 @@ const CustomImg = memo((props) => {
                         ...props.style,
                     }}
                 ></Image>
+            ) : (
+                <div
+                    style={{
+                        ...props.style,
+                        width: "100%",
+                        backgroundColor: "#999999",
+                    }}
+                ></div>
             )}
         </>
     )

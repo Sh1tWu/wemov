@@ -1,5 +1,5 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const { DefinePlugin } = require("webpack")
+// const { DefinePlugin } = require("webpack")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const { merge } = require("webpack-merge")
 
@@ -78,7 +78,7 @@ const commonConfig = (isProduction = false) => {
                     test: /\.(png|svg|jpg|jpeg|gif)$/i,
                     type: "asset",
                     generator: {
-                        filename: "img/[name].[hash:6][ext]",
+                        filename: "images/[name].[hash:6][ext]",
                     },
                     parser: {
                         dataUrlCondition: {

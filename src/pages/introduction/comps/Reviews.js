@@ -77,8 +77,8 @@ const Reviews = (props) => {
                                       <AvatarWrap>
                                           <Avatar
                                               src={
-                                                  item.author_details
-                                                      .avatar_path
+                                                  item?.author_details
+                                                      ?.avatar_path
                                                       ? item.author_details
                                                             .avatar_path
                                                       : UserIcon
@@ -88,8 +88,8 @@ const Reviews = (props) => {
                                       <UserInfoWrap>
                                           <Username>{item.author}</Username>
                                           <RatingBar>
-                                              {item.author_details.rating
-                                                  ? item.author_details.rating
+                                              {item?.author_details?.rating
+                                                  ? item?.author_details?.rating
                                                   : "暂无评分"}
                                           </RatingBar>
                                       </UserInfoWrap>

@@ -39,8 +39,6 @@ const Banner = memo((props) => {
         }
     }, [id])
 
-    console.log(peopleInfo)
-
     return (
         <>
             <Container>

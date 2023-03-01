@@ -5,7 +5,7 @@ const http = {
         params = params || {}
         return new Promise((resolve, reject) => {
             axiosInstance
-                .get(url, params)
+                .get(url, { params })
                 .then((res) => {
                     resolve(res)
                 })
@@ -19,7 +19,7 @@ const http = {
         params = params || {}
         return new Promise((resolve, reject) => {
             axiosInstance
-                .post(url, params)
+                .post(url, { params })
                 .then((res) => {
                     resolve(res)
                 })

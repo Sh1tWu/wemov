@@ -17,7 +17,7 @@ function Recommend() {
     )
 
     const history = useHistory()
-    const [movie, setMovie] = useState([])
+    const [movie, setMovie] = useState({})
     const [imgError, setImgError] = useState(false)
 
     useEffect(() => {
@@ -31,6 +31,7 @@ function Recommend() {
 
     // img onerror
     function resetImgUrl(e, imgSrc, maxErrorNum) {
+        console.log(e)
         const timer = setTimeout(() => {
             if (maxErrorNum > 0) {
                 console.log(maxErrorNum)
@@ -43,7 +44,7 @@ function Recommend() {
                 setImgError(true)
                 e.target.onerror = null
             }
-        }, 2000)
+        }, 1000)
     }
 
     return (
@@ -52,7 +53,7 @@ function Recommend() {
             onClick={() => toIntroduction(movie.id)}
         >
             {/* 默认展示图片 */}
-            {movie ? (
+            {movie?.backdrop_path ? (
                 <>
                     {imgError === false ? (
                         <img

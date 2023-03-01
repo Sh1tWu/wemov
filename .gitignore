@@ -11,6 +11,9 @@
 # production
 /build
 /dist
+/wemov.conf
+/dockerfile
+/docker-compose.yaml
 
 # misc
 .DS_Store
