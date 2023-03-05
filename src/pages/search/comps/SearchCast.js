@@ -17,6 +17,8 @@ function SearchCast() {
         shallowEqual
     )
 
+    // console.log(`SearchCar render~~`)
+
     const history = useHistory()
 
     function toCast(item) {

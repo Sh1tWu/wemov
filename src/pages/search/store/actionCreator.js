@@ -22,6 +22,7 @@ export const addSearchResults = (results) => ({
 })
 
 export const getTotalResultsAction = (query) => {
+    // console.log(query)
     return (dispatch) => {
         Promise.all([getSearchMovie(query, 1), getSearchCast(query, 1)])
             .then((res) => {
@@ -40,6 +41,7 @@ export const getTotalResultsAction = (query) => {
 }
 
 export const getSearchMovieAction = (query, page) => {
+    // console.log(query)
     return (dispatch) => {
         getSearchMovie(query, page)
             .then((res) => {

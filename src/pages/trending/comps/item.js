@@ -47,7 +47,12 @@ const Item = (props) => {
             <RightPart>
                 <Overview>{props.movieInfo.overview}</Overview>
                 <OptionBar>
-                    <Vote>评分 : {props.movieInfo.vote_average}</Vote>
+                    <Vote>
+                        评分 :{" "}
+                        {props?.movieInfo?.vote_average
+                            ? Math.floor(props.movieInfo.vote_average * 10) / 10
+                            : `暂无评分`}
+                    </Vote>
                     <Jump onClick={toIntroduction}>
                         <div>更多信息</div>
                         <Icon src={arrow}></Icon>

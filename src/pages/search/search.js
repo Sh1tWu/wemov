@@ -9,7 +9,11 @@ import * as styled from "./style/search.style"
 import SearchCast from "./comps/SearchCast"
 import SearchMovie from "./comps/SearchMovie"
 
-import { getTotalResultsAction } from "./store/actionCreator"
+import {
+    getTotalResultsAction,
+    getSearchMovieAction,
+    getSearchCastAction,
+} from "./store/actionCreator"
 
 function Search() {
     const history = useHistory()
@@ -27,6 +31,9 @@ function Search() {
 
     useEffect(() => {
         dispatch(getTotalResultsAction(query))
+        dispatch(getSearchMovieAction(query))
+        dispatch(getSearchCastAction(query))
+        // console.log(query)
     }, [query])
 
     function toSearchMovie() {

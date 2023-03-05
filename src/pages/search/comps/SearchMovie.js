@@ -15,6 +15,10 @@ function SearchMovie() {
         shallowEqual
     )
 
+    // console.log(movie)
+
+    // console.log(`SearchMovie render~`)
+
     const history = useHistory()
 
     function toMovie(id) {
