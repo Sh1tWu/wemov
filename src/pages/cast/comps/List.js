@@ -10,6 +10,7 @@ import {
     Wrap,
     Item,
     ItemImgWrap,
+    DescriptionWrap,
     Description,
     Info,
     Title,
@@ -71,17 +72,21 @@ const List = memo((props) => {
                                           />
                                       </ItemImgWrap>
                                       {/* 影片信息 */}
-                                      <Description>
-                                          <Title>{item.title}</Title>
-                                          <Info>
-                                              <Character>
-                                                  {item.character
-                                                      ? item.character
-                                                      : item.job}
-                                              </Character>
-                                              <Date>{item.release_date}</Date>
-                                          </Info>
-                                      </Description>
+                                      <DescriptionWrap>
+                                          <Description>
+                                              <Title>{item.title}</Title>
+                                              <Info>
+                                                  <Character>
+                                                      {item.character
+                                                          ? item.character
+                                                          : item.job}
+                                                  </Character>
+                                                  <Date>
+                                                      {item.release_date}
+                                                  </Date>
+                                              </Info>
+                                          </Description>
+                                      </DescriptionWrap>
                                   </Item>
                               )
                           })

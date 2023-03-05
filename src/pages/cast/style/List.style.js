@@ -54,15 +54,16 @@ export const ItemImgWrap = styled.div`
 `
 
 export const DescriptionWrap = styled.div`
-    position: absolute;
-`
-
-export const Description = styled.div`
     width: 370px;
-    color: white;
+    height: 208px;
     position: relative;
-    top: -80px;
-    padding: 0 20px 17px;
+    top: -208px;
+    display: flex;
+    flex-direction: column-reverse;
+`
+export const Description = styled.div`
+    color: white;
+    padding: 17px 20px 17px;
 `
 
 export const Title = styled.div`
@@ -77,9 +78,12 @@ export const Info = styled.div`
 export const Character = styled.div`
     font-size: 16px;
     font-weight: 600;
+    flex: 5;
 `
 
 export const Date = styled.div`
     font-size: 16px;
     margin-left: 5px;
+    flex: 2;
+    text-align: right;
 `

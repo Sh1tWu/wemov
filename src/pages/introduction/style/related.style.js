@@ -66,11 +66,14 @@ export const Info = styled.div`
 
 export const Country = styled.div`
     font-size: 16px;
+    flex: 5;
 `
 
 export const Date = styled.div`
     font-size: 16px;
     margin-left: 5px;
+    flex: 2;
+    text-align: right;
 `
 
 export const EmptyQueue = styled.div`
