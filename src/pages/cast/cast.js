@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom"
 import Banner from "./comps/Banner"
 import List from "./comps/List"
 
-import { getMoviesAction } from "./store/actionCreator"
+import { getMoviesAction, clearCastData } from "./store/actionCreator"
 
 function Cast() {
     const dispatch = useDispatch()
@@ -27,6 +27,7 @@ function Cast() {
 
     // 职位分类
     useEffect(() => {
+        // let mounted = true
         const jobsCollection = []
         if (JSON.stringify(crewMovie) !== "{}") {
             for (let item in crewMovie) {
@@ -38,11 +39,11 @@ function Cast() {
 
     // dispatch人物相关影视信息请求
     useEffect(() => {
-        let mounted = true
+        // let mounted = true
         dispatch(getMoviesAction(id))
-        return function cleanup() {
-            mounted = false
-        }
+        // return function cleanup() {
+        //     mounted = false
+        // }
     }, [id])
 
     // 组装List

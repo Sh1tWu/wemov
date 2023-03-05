@@ -3,6 +3,7 @@ import {
     ADD_CASTMOVIE,
     ADD_CREWMOVIE,
     ADD_PERSONID,
+    CLEAR_DATA,
 } from "./constants"
 
 const defaultState = {
@@ -28,6 +29,13 @@ function reducer(state = defaultState, action) {
             return {
                 ...state,
                 crewMovie: action.crewMovie,
+            }
+        case CLEAR_DATA:
+            return {
+                personId: "",
+                personalityInformation: {},
+                castMovie: [],
+                crewMovie: [],
             }
         default:
             return state

@@ -1,11 +1,10 @@
 import axiosInstance from "./axios"
 
-const http = {
+const request = {
     get(url, params) {
-        params = params || {}
         return new Promise((resolve, reject) => {
             axiosInstance
-                .get(url, { params })
+                .get(url, { params: params || {} })
                 .then((res) => {
                     resolve(res)
                 })
@@ -16,10 +15,9 @@ const http = {
         })
     },
     post(url, params) {
-        params = params || {}
         return new Promise((resolve, reject) => {
             axiosInstance
-                .post(url, { params })
+                .post(url, { params: params || {} })
                 .then((res) => {
                     resolve(res)
                 })
@@ -31,4 +29,4 @@ const http = {
     },
 }
 
-export default http
+export default request

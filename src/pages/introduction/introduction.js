@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux"
 import { useHistory, useParams } from "react-router-dom"
 
 // redux
-import { getMovieAction } from "./store/actionCreators"
+import { getMovieAction, clearMovieData } from "./store/actionCreators"
 
 import Display from "./comps/Display"
 import Casts from "./comps/Casts"
@@ -17,6 +17,7 @@ function Introduction() {
 
     const { movie_id } = params
 
+    // 如果URL改变则页面回到顶部
     useEffect(() => {
         history.listen((location, action) => {
             if (
@@ -28,9 +29,15 @@ function Introduction() {
         })
     }, [history])
 
+    // 根绝电影的ID去请求电影信息
     useEffect(() => {
+        // if()
         dispatch(getMovieAction(movie_id))
     }, [movie_id])
+
+    useEffect(() => {
+        dispatch(clearMovieData())
+    }, [])
 
     return (
         <div>

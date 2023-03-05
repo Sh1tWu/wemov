@@ -8,6 +8,7 @@ import {
     ADD_CASTMOVIE,
     ADD_CREWMOVIE,
     ADD_APPOINTMENTS,
+    CLEAR_DATA,
     // ADD_PERSONID,
 } from "./constants"
 
@@ -40,8 +41,14 @@ export const addAppointments = (jobs) => ({
     jobs,
 })
 
+// 清空信息
+export const clearCastData = () => ({
+    type: CLEAR_DATA,
+})
+
 // 获取人物基本信息
 export const getPeopleInformationAction = (id) => {
+    console.log("getPeopleInformationAction~")
     return (dispatch) => {
         getPeople(id)
             .then((res) => {

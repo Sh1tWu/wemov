@@ -1,4 +1,4 @@
-import { ADD_MOVIE, ADD_CASTS, ADD_REVIEWS } from "./constants"
+import { ADD_MOVIE, ADD_CASTS, ADD_REVIEWS, CLEAR_DATA } from "./constants"
 
 const defaultState = {
     movie: {},
@@ -14,6 +14,8 @@ function reducer(state = defaultState, action) {
             return { ...state, casts: action.casts }
         case ADD_REVIEWS:
             return { ...state, reviewsList: action.reviews }
+        case CLEAR_DATA:
+            return { movie: {}, casts: [], reviewsList: [] }
         default:
             return state
     }

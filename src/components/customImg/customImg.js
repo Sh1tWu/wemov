@@ -11,10 +11,13 @@ const CustomImg = memo((props) => {
     const handleOnError = () => {
         setErrorLoaded(true)
     }
-
     return (
         <>
-            {props?.src !== null && errorLoaded === false ? (
+            {props?.src !== null &&
+            props?.src !== undefined &&
+            props?.src !== "undefined" &&
+            props?.src !== "null" &&
+            errorLoaded === false ? (
                 <Image
                     src={`${IMAGEURL}${props.src}`}
                     preview={false}

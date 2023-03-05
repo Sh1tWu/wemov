@@ -17,8 +17,9 @@ import CustomImg from "components/customImg/customImg"
 
 import { getPeopleInformationAction } from "../store/actionCreator"
 
-const Banner = memo((props) => {
-    const { jobs } = props
+const Banner = memo((props = {}) => {
+    // console.log(props)
+    const { jobs } = Object.keys(props).length !== 0 ? props : {}
     const dispatch = useDispatch()
     const location = useLocation()
     const { id } = location.state
@@ -34,9 +35,9 @@ const Banner = memo((props) => {
         // 获取人物基本信息
         dispatch(getPeopleInformationAction(id))
         // 清除副作用
-        return function cleanup() {
-            mounted = false
-        }
+        // return function cleanup() {
+        //     mounted = false
+        // }
     }, [id])
 
     return (
@@ -45,7 +46,7 @@ const Banner = memo((props) => {
                 <Wrap>
                     <ProfileImgWrap>
                         <CustomImg
-                            src={`${peopleInfo.profile_path}`}
+                            src={`${peopleInfo?.profile_path}`}
                             type="people"
                         />
                     </ProfileImgWrap>

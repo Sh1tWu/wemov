@@ -1,4 +1,4 @@
-import { ADD_MOVIE, ADD_CASTS, ADD_REVIEWS } from "./constants"
+import { ADD_MOVIE, ADD_CASTS, ADD_REVIEWS, CLEAR_DATA } from "./constants"
 import { getMovie } from "network/movie"
 import { getCasts } from "network/casts"
 import { getReviews } from "network/reviews"
@@ -20,6 +20,12 @@ export const addReviewsAction = (reviews) => ({
     type: ADD_REVIEWS,
     reviews,
 })
+
+export const clearMovieData = () => {
+    return {
+        type: CLEAR_DATA,
+    }
+}
 
 export const getMovieAction = (id) => {
     return (dispatch) => {

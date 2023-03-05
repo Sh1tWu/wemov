@@ -43,14 +43,16 @@ export const ItemImgWrap = styled.div`
 `
 
 export const DescriptionWrap = styled.div`
-    position: absolute;
+    width: 370px;
+    height: 208px;
+    position: relative;
+    top: -208px;
+    display: flex;
+    flex-direction: column-reverse;
 `
 export const Description = styled.div`
-    width: 370px;
     color: white;
-    position: relative;
-    top: -80px;
-    padding: 0 20px 17px;
+    padding: 17px 20px 17px;
 `
 
 export const Title = styled.div`
@@ -69,4 +71,13 @@ export const Country = styled.div`
 export const Date = styled.div`
     font-size: 16px;
     margin-left: 5px;
+`
+
+export const EmptyQueue = styled.div`
+    width: 50%;
+    padding: 20px 10px;
+    margin: 0 auto;
+    font-size: 18px;
+    text-align: center;
+    background-color: white;
 `
